@@ -1,189 +1,249 @@
-Lab -  Setting Up and Deploying an Angular Calculator Application on Ubuntu
-Objective:
-The objective of this lab is to teach students how to set up and deploy an Angular-based web application (Angular Calculator) on a local Ubuntu server. The steps will include cloning the repository, setting up the necessary environment, installing dependencies, building the Angular project, and deploying it using Nginx.
 
-Materials Needed:
-Ubuntu system (or any Linux-based operating system)
+# 🧮 Angular Calculator Deployment Lab on Ubuntu
 
+![Angular](https://img.shields.io/badge/Framework-Angular-red?logo=angular)
+![Ubuntu](https://img.shields.io/badge/OS-Ubuntu-orange?logo=ubuntu)
+![Nginx](https://img.shields.io/badge/WebServer-Nginx-green?logo=nginx)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Status](https://img.shields.io/badge/Status-Completed-success)
 
-Node.js and npm installed
+---
 
+## 📑 Table of Contents
+1. [🎯 Objective](#-objective)
+2. [🧰 Materials Needed](#-materials-needed)
+3. [📘 Prerequisites](#-prerequisites)
+4. [🧪 Procedure](#-procedure)
+   - [1️⃣ Setting up the Environment](#1️⃣-setting-up-the-environment)
+   - [2️⃣ Clone the Angular Repository](#2️⃣-clone-the-angular-repository)
+   - [3️⃣ Install Dependencies](#3️⃣-install-dependencies)
+   - [4️⃣ Build the Angular Application](#4️⃣-build-the-angular-application)
+   - [5️⃣ Install and Configure Nginx](#5️⃣-install-and-configure-nginx)
+   - [6️⃣ Test the Application](#6️⃣-test-the-application)
+5. [🏁 Conclusion](#-conclusion)
+6. [⚙️ Troubleshooting Tips](#%EF%B8%8F-troubleshooting-tips)
+7. [🚀 Additional Tasks (Optional)](#-additional-tasks-optional)
+8. [📚 References](#-references)
 
-Angular CLI installed
+---
 
+## 🎯 Objective
+The goal of this lab is to **set up and deploy an Angular-based web application (Angular Calculator)** on a local Ubuntu server using **Nginx**.  
+By the end, you’ll know how to:
+- Clone a GitHub repository
+- Install dependencies
+- Build the Angular project for production
+- Deploy it with Nginx
+- Access it via browser
 
-Git for cloning the repository
+---
 
+## 🧰 Materials Needed
+- 🖥️ Ubuntu system (or any Linux-based OS)  
+- 🟢 Node.js and npm  
+- 🔺 Angular CLI  
+- 🧬 Git  
+- 🌐 Nginx  
 
-Nginx for serving the Angular application
+---
 
+## 📘 Prerequisites
+- Basic understanding of **Angular** and **web development concepts**  
+- Familiarity with **Linux terminal commands**  
+- Basic knowledge of **npm** and **Node.js**
 
+---
 
-Prerequisites:
-Basic understanding of Angular and web development concepts.
+## 🧪 Procedure
 
+### 1️⃣ Setting up the Environment
 
-Familiarity with using terminal commands in Linux.
-
-
-Familiarity with Angular CLI, npm, and Node.js.
-
-
-
-Procedure:
-1. Setting up the Environment:
-Step 1.1: Check the current system hostname
- Open the terminal and run the following command to check the current system hostname:
-
- hostnamectl
-
-
-If needed, set the hostname to angular-app by running:
-
-
+#### 🧾 Step 1.1: Check and set hostname
+```bash
+hostnamectl
 sudo hostnamectl set-hostname angular-app
+````
 
+#### 🔄 Step 1.2: Update system packages
 
-Step 1.2: Update the system
- Ensure the system packages are up to date:
+```bash
+sudo apt -y update
+```
 
- sudo apt -y update
+---
 
+### 2️⃣ Clone the Angular Repository
 
+#### 📂 Step 2.1: Clone the project
 
-2. Clone the Angular Calculator Repository:
-Step 2.1: Clone the repository from GitHub
- Navigate to your desired directory and run the following command to clone the Angular Calculator repository:
+```bash
+git clone https://github.com/Ai-TechNov/AngularCalculator.git
+```
 
- git clone https://github.com/Ai-TechNov/AngularCalculator.git
+#### 📁 Step 2.2: Navigate into the directory
 
+```bash
+cd AngularCalculator
+```
 
-Step 2.2: Navigate into the cloned directory
- Once the repository is cloned, navigate into the project folder:
+---
 
- cd AngularCalculator
+### 3️⃣ Install Dependencies
 
+#### 🧩 Step 3.1: Verify Node.js and npm
 
-
-3. Install Dependencies:
-Step 3.1: Verify Node.js and npm versions
- Ensure you have Node.js and npm installed:
-
- node -v
+```bash
+node -v
 npm -v
- If these are not installed or if the version is outdated, follow the next steps to install the correct versions.
+```
 
+If not installed or outdated, install them:
 
-Step 3.2: Install Node.js and npm (if necessary)
- Install Node.js (version 20.x) and npm by running:
+#### ⚙️ Step 3.2: Install Node.js and npm
 
- sudo apt-get install -y nodejs
+```bash
+sudo apt-get install -y nodejs
 sudo apt install npm -y
+```
 
+#### 📦 Step 3.3: Install project dependencies
 
-Step 3.3: Install project dependencies
- Run npm install to install the dependencies specified in the package.json file:
+```bash
+npm install
+```
 
- npm install
+---
 
+### 4️⃣ Build the Angular Application
 
+#### 🏗️ Step 4.1: Build for production
 
-4. Build the Angular Application:
-Step 4.1: Build the Angular project
- Run the following command to build the Angular project:
+```bash
+sudo ng build --prod
+```
 
- sudo ng build --prod
- This will generate the production-ready files in the dist/ folder.
+✅ Output will be generated in the `dist/` folder.
 
+---
 
+### 5️⃣ Install and Configure Nginx
 
-5. Install and Configure Nginx to Serve the Application:
-Step 5.1: Install Nginx
- If Nginx is not installed, run the following command to install it:
+#### 🌐 Step 5.1: Install Nginx
 
- sudo apt -y install nginx
+```bash
+sudo apt -y install nginx
+```
 
+#### 🔍 Step 5.2: Check Nginx status
 
-Step 5.2: Verify Nginx installation
- After installing, check the status of the Nginx service to ensure it is running:
+```bash
+sudo systemctl status nginx
+```
 
- sudo systemctl status nginx
+#### 🧹 Step 5.3: Remove default web files
 
+```bash
+sudo rm -rf /var/www/html/*
+```
 
-Step 5.3: Remove the default web content
- Remove any default files present in /var/www/html/:
+#### 📁 Step 5.4: Copy built files to Nginx root
 
- sudo rm -rf /var/www/html/*
+```bash
+sudo cp -r dist/angularCalc/* /var/www/html/
+```
 
+#### 🔁 Step 5.5: Restart Nginx
 
-Step 5.4: Copy the build files to the Nginx root
- After building the application, copy the content of the dist/angularCalc/ folder into Nginx's default root directory:
+```bash
+sudo systemctl restart nginx
+```
 
- sudo cp -r dist/angularCalc/* /var/www/html/
+---
 
+### 6️⃣ Test the Application
 
-Step 5.5: Restart Nginx
- Restart Nginx to apply the changes:
+#### 🧠 Step 6.1: Access in Browser
 
- sudo systemctl restart nginx
+Open your browser and visit:
 
+```
+http://<your-server-ip>
+```
 
+Or if local:
 
-6. Test the Application:
-Step 6.1: Access the application via a browser
- Open your browser and navigate to the following URL to see your Angular Calculator app in action:
+```
+http://localhost
+```
 
- http://<your-server-ip>
- If you set this up on a local server, use http://localhost or http://127.0.0.1.
+🎉 You should now see your **Angular Calculator App** running successfully!
 
+---
 
+## 🏁 Conclusion
 
-Conclusion:
-By following the steps above, students will learn how to:
-Clone an Angular project from GitHub.
+After completing this lab, you have learned to:
+✅ Clone an Angular project from GitHub
+✅ Install dependencies using npm
+✅ Build for production
+✅ Serve with Nginx
+✅ Access your app in a browser
 
+This lab builds practical knowledge in **Angular deployment**, **Linux administration**, and **DevOps fundamentals**.
 
-Install necessary dependencies using npm.
+---
 
+## ⚙️ Troubleshooting Tips
 
-Build the Angular project for production.
+| Issue                 | Possible Cause                 | Solution                                                 |
+| --------------------- | ------------------------------ | -------------------------------------------------------- |
+| ❌ `ng build` fails    | Missing dependencies           | Run `npm install`                                        |
+| 🚫 Nginx not starting | Misconfiguration               | Run `sudo nginx -t` and check `/var/log/nginx/error.log` |
+| Blank page in browser | Wrong file permissions or path | Check `/var/www/html/` contents                          |
 
+---
 
-Set up and configure Nginx to serve the built Angular files.
+## 🚀 Additional Tasks (Optional)
 
+### 💡 Enhance the Calculator
 
-Test the application through a web browser.
+Try adding:
 
+* Additional math operations (%, √, ±)
+* Decimal and keyboard input
+* History log of calculations
 
-This hands-on lab covers basic Angular setup and deployment on a Linux-based server, giving students practical skills in both development and deployment pipelines.
+### 🧭 Version Control with Git
 
-Troubleshooting Tips:
-If ng build fails, ensure that all dependencies are correctly installed by running npm install.
+```bash
+git add .
+git commit -m "Enhanced calculator UI"
+git push origin main
+```
 
+---
 
-If Nginx is not starting, verify the configuration files in /etc/nginx/ or check the logs in /var/log/nginx/ for specific errors.
+## 📚 References
 
+* [📘 Angular Official Documentation](https://angular.io/docs)
+* [🌐 Nginx Official Documentation](https://nginx.org/en/docs/)
+* [🟢 Node.js Official Docs](https://nodejs.org/en/docs)
 
-If the app does not display correctly in the browser, check the permissions of the /var/www/html/ directory and ensure that the correct files were copied.
+---
 
+## 🧠 Author & Purpose
 
+**Author:** Ai-TechNov
+**Purpose:** Educational lab for teaching **Angular deployment** and **Nginx configuration** on **Ubuntu Linux**.
+**Category:** 🧩 Cloud • DevOps • Web Deployment
 
-Additional Tasks (Optional):
-Modify the Angular Calculator: Students can try modifying the Angular Calculator by adding more features like basic math functions, decimal support, or even a history panel.
+---
 
+```
 
-Use Git for version control: Encourage students to regularly commit their changes and push them to GitHub.
+---
 
-
-
-References:
-Angular Official Documentation
-
-
-Nginx Official Documentation
-
-
-Node.js Official Documentation
-
-
-
+Would you like me to:
+1. 🖼️ Add a **diagram or architecture image** (showing how Nginx serves Angular’s dist folder)?  
+2. 📄 Generate this as a **stylish PDF lab guide** (for training distribution)?
+```
